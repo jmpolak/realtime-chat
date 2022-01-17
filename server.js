@@ -35,8 +35,10 @@ io.on("connection", socket => {
     // Listen to chat message
     socket.on("chatMessage", message => {
         const user = getCurrentUser(socket.id)
-        io.to(user.room).emit("message", formatMessage(user.username, message))
+        io.to(user.room).emit("message", formatMessage(user.username, message.text, message.image))
     })
+
+
 
 
 

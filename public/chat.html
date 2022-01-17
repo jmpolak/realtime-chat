@@ -13,7 +13,7 @@
 <body>
   <div class="chat-container">
     <header class="chat-header">
-      <h1><i class="fas fa-smile"></i> Chat App</h1>
+      <h1>Chat App</h1>
       <a href="index.html" class="btn">Leave Room</a>
     </header>
     <main class="chat-main">
@@ -29,7 +29,15 @@
       </div>
     </main>
     <div class="chat-form-container">
+      <div id="image-preview-wrapper" class="center" hidden>
+        <a href="#" id="delete-iamge-preview"><i class="fas fa-times"></i></a>
+        <img id="image-preview" src="#" alt="a" />
+      </div>
       <form id="chat-form">
+        <div class="file-input">
+          <input accept="image/gif, image/png, image/jpeg" type="file" id="file" class="file">
+          <label for="file"><i class="fas fa-image"></i></label>
+        </div>
         <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
         <button class="btn"><i class="fas fa-paper-plane"></i> Send</button>
       </form>

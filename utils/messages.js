@@ -1,12 +1,13 @@
 const moment = require("moment")
 moment.locale("de")
 
-formatMessage = (username, messageText) => {
+formatMessage = (username, messageText, image = null) => {
 
     return {
         username,
         messageText,
-        time: moment().format('LT')
+        time: moment().format('LT'),
+        image
     }
 }
 
