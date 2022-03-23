@@ -2,7 +2,7 @@
 
 ## About The Project
 
-This is a real time Node.js chatting website. Uses socket.io to handle websockets. Users are stored in memory.
+This is a real time Node.js chatting website. Uses socket.io to handle websockets.
 
 ### Built With
 
