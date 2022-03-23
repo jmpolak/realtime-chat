@@ -8,6 +8,9 @@ const imagePreview = document.getElementById("image-preview")
 const deleteImagePreview = document.getElementById("delete-iamge-preview")
 const messageInput = document.getElementById("msg")// req
 
+
+
+
 const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true
 })
@@ -28,7 +31,8 @@ ${users.map(user => `<li>${user.username}</li>`).join("")}
 
 // Listen to new message
 socket.on("message", message => {
-    appendMessage(message)
+    console.log(message)
+    appendMessage(message, false)
     chatMessage.scrollTop = chatMessage.scrollHeight
 })
 
@@ -53,6 +57,7 @@ chatForm.addEventListener("submit", async e => {
 
     }
     msg.text = e.target.elements.msg.value
+    appendMessage(formatMessage("You", msg.text, msg.image), true)
     socket.emit("chatMessage", msg)
     e.target.elements.msg.value = ""
     e.target.elements.msg.focus()
@@ -80,10 +85,19 @@ deleteImagePreview.onclick = e => {
     imageUploader.required = false
 }
 
-appendMessage = (message) => {
+const appendMessage = (message, ownUserMessage) => {
     const div = document.createElement("div")
-    div.classList.add("message")
-    imageElement = ""
+    if(ownUserMessage){
+        div.classList.add("own-user-message")
+        div.classList.add("ml-0")
+    }
+    else{
+        div.classList.add("message")
+        div.classList.add("ml-auto")
+        div.classList.add("mr-0")
+    }
+    
+    let imageElement = ""
     if (message.image) {
         imageElement = `<img class="file-message" src='${message.image}' />`
     }
@@ -97,7 +111,7 @@ appendMessage = (message) => {
     document.querySelector(".chat-messages").appendChild(div)
 }
 
-convertImageToBase64 = (image,) => {
+const convertImageToBase64 = (image,) => {
     return new Promise(function (resolve, reject) {
 
         const reader = new FileReader();
@@ -110,4 +124,14 @@ convertImageToBase64 = (image,) => {
     });
 
 
+}
+
+const formatMessage = (username, messageText, image = null) => {
+    moment.locale("de")
+    return {
+        username,
+        messageText,
+        time: moment().format('LT'),
+        image
+    }
 }

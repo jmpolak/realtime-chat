@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")))
 const botName = "ChatBot"
 
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
 
     // on joining a room
     socket.on("joinRoom", ({ username, room }) => {
@@ -35,7 +35,7 @@ io.on("connection", socket => {
     // Listen to chat message
     socket.on("chatMessage", message => {
         const user = getCurrentUser(socket.id)
-        io.to(user.room).emit("message", formatMessage(user.username, message.text, message.image))
+        socket.to(user.room).emit("message", formatMessage(user.username, message.text, message.image))
     })
 
 
